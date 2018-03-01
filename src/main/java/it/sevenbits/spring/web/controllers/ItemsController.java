@@ -13,14 +13,14 @@ import java.util.List;
 @RequestMapping("/items")
 public class ItemsController {
 
-    public ItemsRepository itemsRepository;
+    private ItemsRepository itemsRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-//    public List<Item> list() {
-//        return itemsRepository.getAllItems();
-//    }
-    public String items() {
-        return "ITEMS from ItemsController!";
+    public List<Item> list() {
+        return itemsRepository.getAllItems();
     }
+    public ItemsController(final ItemsRepository itemsRepository) {
+    this.itemsRepository = itemsRepository;
+}
 }
