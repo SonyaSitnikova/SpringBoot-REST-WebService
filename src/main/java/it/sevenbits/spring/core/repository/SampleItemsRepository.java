@@ -23,4 +23,30 @@ public class SampleItemsRepository implements ItemsRepository {
     public List<Item> getAllItems() {
         return Collections.unmodifiableList(items);
     }
+
+    @Override
+    public Item create(Item newItem) {
+        items.add(newItem);
+        return newItem;
+    }
+
+    @Override
+    public Item getItemById(long id) {
+        for (Item item : items) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Item update(long id, Item newItem) {
+        return items.set(items.indexOf(getItemById(id)), new Item(id,newItem.getName()));
+    }
+
+    @Override
+    public boolean delete(long id) {
+        return items.remove(getItemById(id));
+    }
 }
