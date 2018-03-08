@@ -26,7 +26,7 @@ public class ItemController {
     public ResponseEntity<Item> get(@PathVariable long id) {
         Item result = itemsRepository.getItemById(id);
         if (result == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(result);
         }
@@ -34,8 +34,7 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod. PUT)
     @ResponseBody
-    public ResponseEntity<Item> update(
-            @PathVariable long id, @RequestBody Item newItem) {
+    public ResponseEntity<Item> update(@PathVariable long id, @RequestBody Item newItem) {
         Item result = itemsRepository.update(id, newItem);
         if (result == null) {
             return ResponseEntity.notFound().build();
@@ -57,7 +56,5 @@ public class ItemController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 
 }

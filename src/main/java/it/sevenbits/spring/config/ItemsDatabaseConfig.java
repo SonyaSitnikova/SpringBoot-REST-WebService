@@ -1,6 +1,5 @@
 package it.sevenbits.spring.config;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -10,22 +9,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class ItemsDatabaseConfig {
-    @Bean
-    @Qualifier("itemsJdbcOperations")
-    public JdbcOperations itemsJdbcOperations(
-            @Qualifier("itemsDataSource")
-                    DataSource itemsDataSource
-    ) {
-        return new JdbcTemplate(itemsDataSource);
-    }
-
     @Bean
     @Qualifier("itemsDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.items")
     @FlywayDataSource
     public DataSource itemsDataSource() {
-        return (DataSource) DataSourceBuilder.create().build();
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    @Qualifier("itemsJdbcOperations")
+    public JdbcOperations itemsJdbcOperations(@Qualifier("itemsDataSource") DataSource dataSource) {
+        return new JdbcTemplate(itemsDataSource());
     }
 }

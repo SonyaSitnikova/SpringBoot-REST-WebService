@@ -31,13 +31,9 @@ public class ItemsController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Item> create(
-            @RequestBody Item newItem) {
+    public ResponseEntity<Item> create(@RequestBody Item newItem) {
         Item createdItem = itemsRepository.create(newItem);
-        URI location = UriComponentsBuilder.fromPath("/items/")
-                .path(String.valueOf(createdItem.getId()))
-                .build().toUri();
-        return ResponseEntity.created(location)
-                .body(createdItem);
+        URI location = UriComponentsBuilder.fromPath("/items/").path(String.valueOf(createdItem.getId())).build().toUri();
+        return ResponseEntity.created(location).body(createdItem);
     }
 }

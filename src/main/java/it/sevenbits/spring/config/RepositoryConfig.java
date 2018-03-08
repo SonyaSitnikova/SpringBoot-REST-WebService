@@ -17,9 +17,7 @@ public class RepositoryConfig {
 //    }
 
     @Bean
-    public ItemsRepository itemsRepository(
-            @Qualifier("itemsJdbcOperations")
-                    JdbcOperations jdbcOperations) {
+    public ItemsRepository itemsRepository(@Qualifier("itemsJdbcOperations") JdbcOperations jdbcOperations) {
         return new DatabaseItemsRepository(jdbcOperations);
     }
 }
