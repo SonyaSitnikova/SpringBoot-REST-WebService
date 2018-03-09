@@ -28,7 +28,9 @@ public class DatabaseItemsRepository implements ItemsRepository {
         long id = getNextId();   // or generate UUID
         String name = newItem.getName();
         int rows = jdbcOperations.update("INSERT INTO item (id, name) VALUES (?, ?)", id, name);
-        return new Item(id, name); // or select from DB
+        if (rows > 0) {
+            return new Item(id, name); // or select from DB
+        } else return null;
     }
 
     @Override
